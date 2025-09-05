@@ -1,2 +1,2 @@
-default_app_config = '%s.apps.AppConfig' % __name__
-__version__ = '0.1.10'
+default_app_config = f'{__name__}.apps.AppConfig'
+__version__ = '0.1.11'
