@@ -105,7 +105,7 @@ from admin_list_controls.components import Block, Icon, Text, Button
 Block(style={'color': 'blue'})(
     'This is some blue text before a button',
     Button()(
-        Icon('icon icon-plus'),
+        Icon(icon_name='plus'),
         'Click me!',
     ),
     Text('This is some pink text after a button', style={'color': 'pink'}),
@@ -209,14 +209,21 @@ Button(action=TogglePanel(ref='foo'))(
 
 #### Icon
 
-Icon components are used to insert icons, usually from wagtail's built-in icons are from a library such as
-`wagtailfontawesome`. They are invoked with a classname argument.
+Icon components are used to insert icons from Wagtail's built-in icon set. The component now uses Wagtail's modern SVG icon system (Wagtail 6.0+) and requires an `icon_name` parameter.
 
 ```python
 from admin_list_controls.components import Icon
 
-Icon('icon icon-plus')
+# Basic icon
+Icon(icon_name='plus')
+
+# Icon with additional CSS classes
+Icon(icon_name='search', classes='custom-class')
 ```
+
+**Note:** This is a breaking change from previous versions. The old format `Icon('icon icon-plus')` is no longer supported.
+
+See [Wagtail's icon reference](https://docs.wagtail.org/en/stable/advanced_topics/icons.html) for the complete list of available icons.
 
 #### Text
 

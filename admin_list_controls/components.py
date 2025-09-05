@@ -160,10 +160,20 @@ class Icon(BaseComponent):
     object_type = 'icon'
     can_have_children = False
 
-    def __init__(self, classes=None, **kwargs):
+    def __init__(self, icon_name, classes=None, **kwargs):
+        if not icon_name:
+            raise ValueError('Icon requires an icon_name parameter')
+
+        self.icon_name = icon_name
+
         if classes:
             kwargs['extra_classes'] = classes
         super().__init__(**kwargs)
+
+    def serialize(self):
+        data = super().serialize()
+        data['icon_name'] = self.icon_name
+        return data
 
 
 class Text(BaseComponent):

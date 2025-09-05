@@ -3,12 +3,7 @@ from django.test import RequestFactory
 from django_webtest import WebTest
 from shop.models import Product
 from admin_list_controls.views import ListControlsIndexView
-
-try:
-    from wagtail.contrib.modeladmin.options import ModelAdmin
-except ImportError:
-    # Re/ deprecation in wagtail 5.2 & removal in wagtail 6
-    from wagtail_modeladmin.options import ModelAdmin
+from wagtail_modeladmin.options import ModelAdmin
 
 
 User = get_user_model()

@@ -7,12 +7,7 @@ from django.utils.safestring import mark_safe
 from .components import ListControls
 from .selectors import LayoutSelector
 from .vendor import webpack_manifest
-
-try:
-    from wagtail.contrib.modeladmin.views import IndexView
-except ImportError:
-    # Re/ deprecation in wagtail 5.2 & removal in wagtail 6
-    from wagtail_modeladmin.views import IndexView
+from wagtail_modeladmin.views import IndexView
 
 
 class ListControlsIndexViewMixin:

@@ -14,7 +14,7 @@ class TestComponents(BaseTestCase):
             },
         )
         serialized = ListControls().serialize()
-        self.assertEqual(serialized['extra_classes'], None)
+        self.assertEqual(serialized['extra_classes'], '')
         self.assertIn('ListControls', serialized['component_id'])
         nested = ListControls()
         self.assertObjectSerializesTo(
@@ -44,8 +44,8 @@ class TestComponents(BaseTestCase):
 
     def test_columns_component(self):
         component = Columns()(
-            [Text('Column 1')],
-            ['Column 2'],
+            Text('Column 1'),
+            'Column 2',
         )
         component.prepare_children()
         serialized = component.serialize()
@@ -55,7 +55,7 @@ class TestComponents(BaseTestCase):
             {
                 'object_type': 'block',
                 'style': {
-                    'width': 'calc((100% - ((2 - 1) * 10px)) / 2)',
+                    'width': 'calc((100% - ((2 - 1) * 20px)) / 2)',
                     'float': 'left',
                     'marginLeft': '0',
                 },
@@ -73,9 +73,9 @@ class TestComponents(BaseTestCase):
             {
                 'object_type': 'block',
                 'style': {
-                    'width': 'calc((100% - ((2 - 1) * 10px)) / 2)',
+                    'width': 'calc((100% - ((2 - 1) * 20px)) / 2)',
                     'float': 'left',
-                    'marginLeft': '10px',
+                    'marginLeft': '20px',
                 },
             },
             serialized['children'][1],
@@ -121,12 +121,31 @@ class TestComponents(BaseTestCase):
 
     def test_icon_component(self):
         self.assertObjectSerializesTo(
-            Icon(classes='test_class_name'),
+            Icon(icon_name='search', classes='test_class_name'),
             {
                 'object_type': 'icon',
+                'icon_name': 'search',
                 'extra_classes': 'test_class_name',
             },
         )
+
+    def test_icon_component_without_classes(self):
+        self.assertObjectSerializesTo(
+            Icon(icon_name='download'),
+            {
+                'object_type': 'icon',
+                'icon_name': 'download',
+                'extra_classes': '',
+            },
+        )
+
+    def test_icon_component_requires_icon_name(self):
+        with self.assertRaises(ValueError) as context:
+            Icon(icon_name='')
+        self.assertEqual(str(context.exception), 'Icon requires an icon_name parameter')
+
+        with self.assertRaises(TypeError):
+            Icon()  # Missing required icon_name parameter
 
     def test_text_component(self):
         self.assertObjectSerializesTo(
