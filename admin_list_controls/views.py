@@ -49,7 +49,8 @@ class ListControlsIndexViewMixin:
                 return obj
 
     def get_template_names(self):
-        return ['admin_list_controls/index.html'] + super().get_template_names()
+        template_names = super().get_template_names()
+        return ['admin_list_controls/index.html'] + (template_names if isinstance(template_names, list) else [template_names])
 
     def get_filters_params(self, params=None):
         """
